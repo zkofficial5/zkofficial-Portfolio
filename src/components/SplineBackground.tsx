@@ -1,8 +1,10 @@
-import React, { Suspense, useEffect, useRef } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { Application } from "@splinetool/runtime";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { motion, AnimatePresence } from "framer-motion";
+import StarBorder from "./StarBorder";
 
 const Spline = React.lazy(() => import("@splinetool/react-spline"));
 
@@ -11,9 +13,26 @@ gsap.registerPlugin(ScrollTrigger);
 const SCENE_URL =
   "https://prod.spline.design/W8N2oe2walGq3Zm5/scene.splinecode";
 
+const phrases = [
+  "Full Stack Developer",
+  "PHP & Laravel",
+  "React & TypeScript",
+  "Creative Writer",
+  "Open to Collaborate",
+];
+
 const SplineBackground = () => {
   const isMobile = useMediaQuery("(max-width: 767px)");
   const containerRef = useRef<HTMLDivElement>(null);
+  const [phraseIndex, setPhraseIndex] = useState(0);
+
+  // Rotate phrases every 4s
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPhraseIndex((i) => (i + 1) % phrases.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleLoad = (_app: Application) => {
     const kill = () => {
@@ -81,22 +100,65 @@ const SplineBackground = () => {
         </Suspense>
       </div>
 
-      {/* Watermark cover — paints over bottom-right corner with matching bg color */}
+      {/* Rotating phrase card — sits above watermark, bottom-right */}
       <div
-        style={{
-          position: "absolute",
-          backgroundColor: "#913162",
-          bottom: 0,
-          right: 0,
-          width: "160px",
-          height: "60px",
-          background: "#0e0a14",
-          zIndex: 10,
-          pointerEvents: "none",
-        }}
-      />
+        className="absolute pointer-events-none"
+        style={{ bottom: "12px", right: "12px", zIndex: 20 }}
+      >
+        <StarBorder
+          color="#C9517A"
+          speed="5s"
+          thickness={1}
+          style={{
+            backgroundColor: "rgba(10,5,15,0.75)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+          }}
+        >
+          <div
+            style={{
+              padding: "10px 18px",
+              minWidth: "190px",
+              textAlign: "center",
+            }}
+          >
+            <p
+              className="font-mono text-[10px] uppercase tracking-[0.2em] mb-1.5"
+              style={{ color: "rgba(201,81,122,0.6)" }}
+            >
+              ✦ currently
+            </p>
+            <div
+              style={{
+                height: "20px",
+                overflow: "hidden",
+                position: "relative",
+              }}
+            >
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={phraseIndex}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="font-mono text-xs font-medium"
+                  style={{
+                    color: "#C9517A",
+                    position: "absolute",
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                  {phrases[phraseIndex]}
+                </motion.p>
+              </AnimatePresence>
+            </div>
+          </div>
+        </StarBorder>
+      </div>
 
-      {/* Left edge fade — blends robot scene into hero text side */}
+      {/* Left edge fade */}
       <div
         style={{
           position: "absolute",

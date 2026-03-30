@@ -34,22 +34,11 @@ const Hero = () => {
       <div
         className="relative z-10 w-full"
         style={{
-          paddingLeft: "clamp(2rem, 8vw, 7rem)",
+          paddingLeft: "clamp(3rem, 8vw, 7rem)",
           paddingTop: "6rem",
           paddingBottom: "4rem",
         }}
       >
-        {/* Label */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.35, duration: 0.5 }}
-          className="font-mono text-xs uppercase tracking-[0.25em] mb-4"
-          style={{ color: "#C9517A" }}
-        >
-          ✦ Full Stack Developer
-        </motion.p>
-
         {/* Name — large, blur-in */}
         <motion.h1
           initial={{ filter: "blur(14px)", opacity: 0 }}
@@ -69,6 +58,16 @@ const Hero = () => {
             Khan
           </span>
         </motion.h1>
+        {/* Label */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.35, duration: 0.5 }}
+          className="font-mono text-xs uppercase tracking-[0.25em] mb-4"
+          style={{ color: "#C9517A" }}
+        >
+          ✦ Full Stack Developer
+        </motion.p>
 
         {/* Two-line italic tagline */}
         <motion.div
