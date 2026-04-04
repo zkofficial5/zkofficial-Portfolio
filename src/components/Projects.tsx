@@ -13,6 +13,7 @@ interface OtherProject {
   badge: "personal" | "freelance";
   tags: TagItem[];
   description: string;
+  github: string;
 }
 
 const otherProjects: OtherProject[] = [
@@ -20,54 +21,114 @@ const otherProjects: OtherProject[] = [
     name: "Quillbase",
     badge: "personal",
     tags: [
-      { name: "Laravel", color: "#FF2D20" },
+      { name: "Laravel 11", color: "#FF2D20" },
       { name: "React", color: "#61DAFB" },
-      { name: "MySQL", color: "#4479A1" },
       { name: "TypeScript", color: "#3178C6" },
+      { name: "MySQL", color: "#4479A1" },
+      { name: "Sanctum", color: "#FF2D20" },
     ],
-    description: "A REST API for a blog platform with a live interactive documentation explorer built in React.",
+    description:
+      "RESTful blog API with token-based auth, full CRUD for posts with tags and nested comments — paired with a custom React explorer UI for testing every endpoint directly in the browser.",
+    github: "https://github.com/zkofficial5/Quillbase",
   },
   {
     name: "VamPortfolio",
     badge: "freelance",
     tags: [
-      { name: "React", color: "#61DAFB" },
-      { name: "JavaScript", color: "#F7DF1E" },
-      { name: "Tailwind CSS", color: "#06B6D4" },
+      { name: "React 18", color: "#61DAFB" },
+      { name: "Vite", color: "#646CFF" },
+      { name: "CSS", color: "#1572B6" },
     ],
-    description: "A custom portfolio website designed and developed for a client as a freelance project.",
+    description:
+      "Dark, intimate single-page portfolio built for a client — card-based layout with section navigation, smooth fade transitions, and a deep crimson aesthetic. Features hash-based routing and inline SVG icons.",
+    github: "https://github.com/zkofficial5/VamPortfolio",
   },
   {
     name: "AllSocIt",
     badge: "personal",
     tags: [
-      { name: "PHP", color: "#777BB4" },
-      { name: "MySQL", color: "#4479A1" },
-      { name: "JavaScript", color: "#F7DF1E" },
+      { name: "TypeScript", color: "#3178C6" },
+      { name: "Python", color: "#3776AB" },
     ],
-    description: "[ description coming soon ]",
+    description:
+      "A Digital Storyteller's Toolkit — platform for content creators to craft, compose, and share digital stories with rich narrative capabilities.",
+    github: "https://github.com/zkofficial5/AllSocIt",
   },
   {
     name: "Fluxcie",
     badge: "personal",
     tags: [
-      { name: "React", color: "#61DAFB" },
-      { name: "JavaScript", color: "#F7DF1E" },
+      { name: "Laravel 11", color: "#FF2D20" },
+      { name: "React 18", color: "#61DAFB" },
+      { name: "TypeScript", color: "#3178C6" },
+      { name: "Tailwind CSS", color: "#06B6D4" },
     ],
-    description: "[ description coming soon ]",
+    description:
+      "Sophisticated real-time communication platform with messaging, file sharing, voice messages, friend requests, and social networking. Glassmorphism UI with Framer Motion animations and token-based auth.",
+    github: "https://github.com/zkofficial5/Fluxcie",
   },
 ];
 
+const shieldnetTags = [
+  { name: "Python", color: "#3776AB" },
+  { name: "FastAPI", color: "#009688" },
+  { name: "React 18", color: "#61DAFB" },
+  { name: "TypeScript", color: "#3178C6" },
+  { name: "scikit-learn", color: "#F97316" },
+  { name: "SQLite", color: "#003B57" },
+];
+
+const emwrapTags = [
+  { name: "Laravel 11", color: "#FF2D20" },
+  { name: "React 18", color: "#61DAFB" },
+  { name: "TypeScript", color: "#3178C6" },
+  { name: "OpenAI API", color: "#10A37F" },
+  { name: "MySQL", color: "#4479A1" },
+  { name: "Tailwind CSS", color: "#06B6D4" },
+];
+
+const TagList = ({ tags }: { tags: TagItem[] }) => (
+  <div className="flex flex-wrap gap-2 mt-2">
+    {tags.map((tag) => (
+      <span
+        key={tag.name}
+        className="text-xs font-mono px-2.5 py-1 rounded-md"
+        style={{ color: tag.color, backgroundColor: `${tag.color}15` }}
+      >
+        {tag.name}
+      </span>
+    ))}
+  </div>
+);
+
+const GithubLink = ({ href }: { href: string }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center gap-1.5 text-sm font-mono transition-all duration-300 mt-2 self-start px-4 py-2 rounded-full border hover:scale-105"
+    style={{ borderColor: "#C9517A", color: "#C9517A" }}
+    onMouseEnter={(e) =>
+      (e.currentTarget.style.boxShadow = "0 0 16px rgba(201,81,122,0.4)")
+    }
+    onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
+  >
+    view on GitHub <ExternalLink size={14} />
+  </a>
+);
+
 const Projects = () => {
-  const [selectedProject, setSelectedProject] = useState<OtherProject | null>(null);
+  const [selectedProject, setSelectedProject] = useState<OtherProject | null>(
+    null,
+  );
 
   return (
     <section
       id="projects"
-      className="py-24 px-4 md:px-8 max-w-6xl mx-auto"
+      className="py-24 px-4 md:px-8 max-w-6xl mx-auto relative z-[2]"
       style={{ background: "linear-gradient(to bottom, #0A0A0A, #0D0D14)" }}
     >
-      {/* FEATURED WORK */}
+      {/* Section heading */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -75,7 +136,9 @@ const Projects = () => {
         viewport={{ once: true }}
         className="text-center mb-12"
       >
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3">featured work</p>
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3">
+          featured work
+        </p>
         <h2
           className="font-display text-3xl md:text-4xl font-semibold text-foreground"
           style={{ textShadow: "0 0 40px rgba(201,81,122,0.2)" }}
@@ -84,14 +147,15 @@ const Projects = () => {
         </h2>
       </motion.div>
 
+      {/* Featured cards */}
       <div className="space-y-8 mb-20">
-        {/* Shieldnet */}
+        {/* ShieldNet — info left, image right */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="rounded-2xl overflow-hidden border transition-all duration-300 grid lg:grid-cols-2"
+          className="rounded-2xl overflow-hidden border transition-all duration-300 flex flex-col lg:flex-row"
           style={{ backgroundColor: "#111118", borderColor: "#2a2a36" }}
           onMouseEnter={(e) => {
             e.currentTarget.style.borderColor = "rgba(201,81,122,0.4)";
@@ -102,63 +166,88 @@ const Projects = () => {
             e.currentTarget.style.boxShadow = "none";
           }}
         >
-          {/* Text */}
-          <div className="p-8 md:p-10 flex flex-col justify-center gap-4">
-            <span className="font-mono text-xs uppercase tracking-wider px-3 py-1 rounded-full border self-start" style={{ borderColor: "#C9517A33", color: "#C9517A" }}>
+          {/* Info div */}
+          <div className="p-8 md:p-10 flex flex-col justify-center gap-4 lg:w-1/2">
+            <span
+              className="font-mono text-xs uppercase tracking-wider px-3 py-1 rounded-full border self-start"
+              style={{ borderColor: "#C9517A33", color: "#C9517A" }}
+            >
               Personal Project
             </span>
             <div className="border-l-4 pl-4" style={{ borderColor: "#C9517A" }}>
-              <h3 className="font-display text-3xl md:text-4xl font-bold text-foreground">Shieldnet</h3>
+              <h3 className="font-display text-3xl md:text-4xl font-bold text-foreground">
+                ShieldNet
+              </h3>
             </div>
             <div className="space-y-3">
               <div>
-                <p className="text-sm font-bold mb-1" style={{ color: "#C9517A" }}>Problem</p>
-                <p className="font-body text-sm text-muted-foreground">Users have little awareness of what cybersecurity threats actually look like in practice.</p>
+                <p
+                  className="text-sm font-bold mb-1"
+                  style={{ color: "#C9517A" }}
+                >
+                  Problem
+                </p>
+                <p className="font-body text-sm text-muted-foreground">
+                  Users need real-time protection against malicious URLs — with
+                  a unified dashboard for monitoring threats and historical
+                  analysis of scanned links.
+                </p>
               </div>
               <div>
-                <p className="text-sm font-bold mb-1" style={{ color: "#06B6D4" }}>Approach</p>
-                <p className="font-body text-sm text-muted-foreground">Built with React and JavaScript, the tool presents real threat scenarios in an interactive, digestible format.</p>
+                <p
+                  className="text-sm font-bold mb-1"
+                  style={{ color: "#06B6D4" }}
+                >
+                  Approach
+                </p>
+                <p className="font-body text-sm text-muted-foreground">
+                  Custom-trained Random Forest classifier on 650k+ URLs deployed
+                  via FastAPI, integrated with a React dashboard and Chrome
+                  extension for seamless threat detection.
+                </p>
               </div>
               <div>
-                <p className="text-sm font-bold mb-1" style={{ color: "#7C3AED" }}>Impact</p>
-                <p className="font-body text-sm text-muted-foreground">Helps non-technical users recognize common attack vectors and practice safer digital habits.</p>
+                <p
+                  className="text-sm font-bold mb-1"
+                  style={{ color: "#7C3AED" }}
+                >
+                  Impact
+                </p>
+                <p className="font-body text-sm text-muted-foreground">
+                  94% accuracy malware and phishing detection across web,
+                  dashboard, and Chrome extension — with instant threat alerts
+                  and comprehensive scan history.
+                </p>
               </div>
             </div>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {[{ name: "React", color: "#61DAFB" }, { name: "JavaScript", color: "#F7DF1E" }].map((tag) => (
-                <span key={tag.name} className="text-xs font-mono px-2.5 py-1 rounded-md" style={{ color: tag.color, backgroundColor: `${tag.color}15` }}>
-                  {tag.name}
-                </span>
-              ))}
-            </div>
-            <a
-              href="https://github.com/zkofficial5"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-mono transition-colors duration-300 mt-2 self-start px-4 py-2 rounded-full border"
-              style={{ borderColor: "#C9517A", color: "#C9517A" }}
-            >
-              view on GitHub <ExternalLink size={14} />
-            </a>
+            <TagList tags={shieldnetTags} />
+            <GithubLink href="https://github.com/zkofficial5/ShieldNet-c" />
           </div>
-          {/* Visual */}
-          <div className="flex items-center justify-center p-8 min-h-[260px]" style={{ backgroundColor: "#0D0D14" }}>
-            <svg viewBox="0 0 120 120" className="w-32 h-32 animate-float" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="60" cy="60" r="50" stroke="#C9517A" strokeWidth="2" strokeDasharray="6 4" opacity="0.5" />
-              <circle cx="60" cy="60" r="30" stroke="#7C3AED" strokeWidth="2" opacity="0.7" />
-              <path d="M60 30 L60 90 M30 60 L90 60" stroke="#C9517A" strokeWidth="1.5" opacity="0.4" />
-              <circle cx="60" cy="60" r="6" fill="#C9517A" opacity="0.8" />
-            </svg>
+
+          {/* Image div — same bg, image fully visible as rectangle */}
+          <div
+            className="lg:w-1/2 flex items-center justify-center p-6"
+            style={{ backgroundColor: "#111118" }}
+          >
+            <img
+              src="/assets/shieldnet.png"
+              alt="ShieldNet screenshot"
+              className="w-full h-auto rounded-xl"
+              style={{
+                border: "1px solid rgba(201,81,122,0.15)",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+              }}
+            />
           </div>
         </motion.div>
 
-        {/* Emwrap */}
+        {/* Emwrap — image left, info right */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
           viewport={{ once: true }}
-          className="rounded-2xl overflow-hidden border transition-all duration-300 grid lg:grid-cols-2"
+          className="rounded-2xl overflow-hidden border transition-all duration-300 flex flex-col lg:flex-row"
           style={{ backgroundColor: "#111118", borderColor: "#2a2a36" }}
           onMouseEnter={(e) => {
             e.currentTarget.style.borderColor = "rgba(201,81,122,0.4)";
@@ -169,58 +258,84 @@ const Projects = () => {
             e.currentTarget.style.boxShadow = "none";
           }}
         >
-          {/* Visual (left for Emwrap) */}
-          <div className="flex items-center justify-center p-8 min-h-[260px] order-2 lg:order-1" style={{ backgroundColor: "#0D0D14" }}>
-            <svg viewBox="0 0 160 80" className="w-40 h-20 animate-float" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <text x="10" y="35" fill="#C9517A" fontFamily="monospace" fontSize="18" opacity="0.8">{"{"}</text>
-              <text x="30" y="55" fill="#7C3AED" fontFamily="monospace" fontSize="14">{'"wrap"'}</text>
-              <text x="130" y="35" fill="#C9517A" fontFamily="monospace" fontSize="18" opacity="0.8">{"}"}</text>
-              <rect x="25" y="15" width="110" height="50" rx="8" stroke="#C9517A" strokeWidth="1" strokeDasharray="4 3" opacity="0.3" />
-            </svg>
+          {/* Image div — left side */}
+          <div
+            className="lg:w-1/2 flex items-center justify-center p-6 order-2 lg:order-1"
+            style={{ backgroundColor: "#111118" }}
+          >
+            <img
+              src="/assets/emwrap.png"
+              alt="Emwrap screenshot"
+              className="w-full h-auto rounded-xl"
+              style={{
+                border: "1px solid rgba(201,81,122,0.15)",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+              }}
+            />
           </div>
-          {/* Text */}
-          <div className="p-8 md:p-10 flex flex-col justify-center gap-4 order-1 lg:order-2">
-            <span className="font-mono text-xs uppercase tracking-wider px-3 py-1 rounded-full border self-start" style={{ borderColor: "#C9517A33", color: "#C9517A" }}>
+
+          {/* Info div — right side */}
+          <div className="p-8 md:p-10 flex flex-col justify-center gap-4 lg:w-1/2 order-1 lg:order-2">
+            <span
+              className="font-mono text-xs uppercase tracking-wider px-3 py-1 rounded-full border self-start"
+              style={{ borderColor: "#C9517A33", color: "#C9517A" }}
+            >
               Personal Project
             </span>
             <div className="border-l-4 pl-4" style={{ borderColor: "#C9517A" }}>
-              <h3 className="font-display text-3xl md:text-4xl font-bold text-foreground">Emwrap</h3>
+              <h3 className="font-display text-3xl md:text-4xl font-bold text-foreground">
+                Emwrap
+              </h3>
             </div>
             <div className="space-y-3">
               <div>
-                <p className="text-sm font-bold mb-1" style={{ color: "#C9517A" }}>Problem</p>
-                <p className="font-body text-sm text-muted-foreground">Writing and testing HTML email templates is tedious without a reliable formatting utility.</p>
+                <p
+                  className="text-sm font-bold mb-1"
+                  style={{ color: "#C9517A" }}
+                >
+                  Problem
+                </p>
+                <p className="font-body text-sm text-muted-foreground">
+                  Teams lack an intelligent, collaborative expense management
+                  system that enforces spending controls while delivering
+                  natural-language financial intelligence.
+                </p>
               </div>
               <div>
-                <p className="text-sm font-bold mb-1" style={{ color: "#06B6D4" }}>Approach</p>
-                <p className="font-body text-sm text-muted-foreground">Developed a React and TypeScript utility that wraps raw content into clean, production-ready email markup.</p>
+                <p
+                  className="text-sm font-bold mb-1"
+                  style={{ color: "#06B6D4" }}
+                >
+                  Approach
+                </p>
+                <p className="font-body text-sm text-muted-foreground">
+                  AI-first architecture integrating GPT-4o-mini across four
+                  workflows: conversational financial assistant, semantic
+                  categorization, proactive spending insights, and AI-augmented
+                  report summaries.
+                </p>
               </div>
               <div>
-                <p className="text-sm font-bold mb-1" style={{ color: "#7C3AED" }}>Impact</p>
-                <p className="font-body text-sm text-muted-foreground">Speeds up email template development and reduces formatting errors for developers.</p>
+                <p
+                  className="text-sm font-bold mb-1"
+                  style={{ color: "#7C3AED" }}
+                >
+                  Impact
+                </p>
+                <p className="font-body text-sm text-muted-foreground">
+                  Isolated multi-tenant workspaces with role-based access,
+                  category-level budget tracking, and CSV export — all surfaced
+                  through a natural-language financial interface.
+                </p>
               </div>
             </div>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {[{ name: "React", color: "#61DAFB" }, { name: "TypeScript", color: "#3178C6" }].map((tag) => (
-                <span key={tag.name} className="text-xs font-mono px-2.5 py-1 rounded-md" style={{ color: tag.color, backgroundColor: `${tag.color}15` }}>
-                  {tag.name}
-                </span>
-              ))}
-            </div>
-            <a
-              href="https://github.com/zkofficial5"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-mono transition-colors duration-300 mt-2 self-start px-4 py-2 rounded-full border"
-              style={{ borderColor: "#C9517A", color: "#C9517A" }}
-            >
-              view on GitHub <ExternalLink size={14} />
-            </a>
+            <TagList tags={emwrapTags} />
+            <GithubLink href="https://github.com/zkofficial5/Emwrap" />
           </div>
         </motion.div>
       </div>
 
-      {/* OTHER PROJECTS */}
+      {/* Other projects */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -228,7 +343,9 @@ const Projects = () => {
         viewport={{ once: true }}
         className="text-center mt-20 mb-8"
       >
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">other noteworthy projects</p>
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+          other noteworthy projects
+        </p>
       </motion.div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -251,15 +368,22 @@ const Projects = () => {
               e.currentTarget.style.boxShadow = "none";
             }}
           >
-            <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-              style={{ background: "linear-gradient(135deg, rgba(201,81,122,0.08), rgba(124,58,237,0.08))" }}
+            <div
+              className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(201,81,122,0.08), rgba(124,58,237,0.08))",
+              }}
             />
             <div className="flex justify-between items-start mb-4 relative z-10">
-              <h3 className="font-display text-xl font-semibold text-foreground">{project.name}</h3>
+              <h3 className="font-display text-xl font-semibold text-foreground">
+                {project.name}
+              </h3>
               <span
                 className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full border"
                 style={{
-                  borderColor: project.badge === "freelance" ? "#7C3AED80" : "#C9517A80",
+                  borderColor:
+                    project.badge === "freelance" ? "#7C3AED80" : "#C9517A80",
                   color: project.badge === "freelance" ? "#7C3AED" : "#C9517A",
                 }}
               >
@@ -268,7 +392,14 @@ const Projects = () => {
             </div>
             <div className="flex flex-wrap gap-1.5 mb-3 relative z-10">
               {project.tags.map((tag) => (
-                <span key={tag.name} className="text-[11px] font-mono px-2 py-0.5 rounded-md" style={{ color: tag.color, backgroundColor: `${tag.color}15` }}>
+                <span
+                  key={tag.name}
+                  className="text-[11px] font-mono px-2 py-0.5 rounded-md"
+                  style={{
+                    color: tag.color,
+                    backgroundColor: `${tag.color}15`,
+                  }}
+                >
                   {tag.name}
                 </span>
               ))}
@@ -277,7 +408,7 @@ const Projects = () => {
               {project.description}
             </p>
             <a
-              href="https://github.com/zkofficial5"
+              href={project.github}
               target="_blank"
               rel="noopener noreferrer"
               className="relative z-10 inline-flex items-center gap-1.5 text-sm font-mono transition-colors duration-300"
@@ -291,8 +422,14 @@ const Projects = () => {
       </div>
 
       {/* Dialog */}
-      <Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
-        <DialogContent className="border" style={{ backgroundColor: "#111118", borderColor: "#2a2a36" }}>
+      <Dialog
+        open={!!selectedProject}
+        onOpenChange={() => setSelectedProject(null)}
+      >
+        <DialogContent
+          className="border"
+          style={{ backgroundColor: "#111118", borderColor: "#2a2a36" }}
+        >
           {selectedProject && (
             <>
               <DialogTitle className="font-display text-2xl font-bold text-foreground">
@@ -300,7 +437,14 @@ const Projects = () => {
               </DialogTitle>
               <div className="flex flex-wrap gap-2 mt-2">
                 {selectedProject.tags.map((tag) => (
-                  <span key={tag.name} className="text-xs font-mono px-2.5 py-1 rounded-md" style={{ color: tag.color, backgroundColor: `${tag.color}15` }}>
+                  <span
+                    key={tag.name}
+                    className="text-xs font-mono px-2.5 py-1 rounded-md"
+                    style={{
+                      color: tag.color,
+                      backgroundColor: `${tag.color}15`,
+                    }}
+                  >
                     {tag.name}
                   </span>
                 ))}
@@ -309,7 +453,7 @@ const Projects = () => {
                 {selectedProject.description}
               </p>
               <a
-                href="https://github.com/zkofficial5"
+                href={selectedProject.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-sm font-mono mt-4 px-4 py-2 rounded-full border self-start"

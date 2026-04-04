@@ -4,7 +4,7 @@
 
 **Full Stack Developer & Creative Writer**
 
-*between syntax and storytelling*
+_between syntax and storytelling_
 
 [![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)](https://typescriptlang.org)
@@ -21,16 +21,16 @@ Personal portfolio built with React, TypeScript, and Vite. Features a 3D interac
 
 ## ✦ Stack
 
-| Layer | Tech |
-|---|---|
-| Framework | React 18 + TypeScript |
-| Build | Vite |
-| Styling | Tailwind CSS + shadcn/ui |
-| Animation | Framer Motion + GSAP |
-| 3D | Spline (`@splinetool/react-spline`) |
-| UI Components | Radix UI |
-| Forms | React Hook Form + Zod |
-| Notifications | Sonner |
+| Layer         | Tech                                |
+| ------------- | ----------------------------------- |
+| Framework     | React 18 + TypeScript               |
+| Build         | Vite                                |
+| Styling       | Tailwind CSS + shadcn/ui            |
+| Animation     | Framer Motion + GSAP                |
+| 3D            | Spline (`@splinetool/react-spline`) |
+| UI Components | Radix UI                            |
+| Forms         | React Hook Form + Zod               |
+| Notifications | Sonner                              |
 
 ## ✦ Features
 
@@ -92,8 +92,9 @@ public/
 ## ✦ Customization
 
 **Colors** — edit CSS variables in `src/index.css`:
+
 ```css
---primary: 338 54% 55%;   /* rose #C9517A */
+--primary: 338 54% 55%; /* rose #C9517A */
 --secondary: 263 70% 58%; /* purple */
 ```
 
@@ -105,6 +106,6 @@ public/
 
 <div align="center">
 
-*© 2025 Zoya Khan*
+_© 2025 Zoya Khan_
 
 </div>

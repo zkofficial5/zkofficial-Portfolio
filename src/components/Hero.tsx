@@ -2,11 +2,11 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const phrases = [
-  "Full Stack Developer",
-  "PHP & Laravel",
-  "React & TypeScript",
-  "Creative Writer",
-  "Open to Collaborate",
+  "Start simple.",
+  "Think, then build.",
+  "Build with intent.",
+  "Solve the right problem.",
+  "Refine continuously.",
 ];
 
 const Hero = () => {
@@ -83,16 +83,7 @@ const Hero = () => {
               color: "rgba(255,255,255,0.38)",
             }}
           >
-            between syntax
-          </p>
-          <p
-            className="font-display italic leading-snug"
-            style={{
-              fontSize: "clamp(1.1rem, 2.2vw, 1.5rem)",
-              color: "rgba(255,255,255,0.38)",
-            }}
-          >
-            and storytelling —
+            Code, Create & Communicate.
           </p>
         </motion.div>
 

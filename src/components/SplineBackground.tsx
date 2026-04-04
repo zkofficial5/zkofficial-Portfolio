@@ -14,11 +14,11 @@ const SCENE_URL =
   "https://prod.spline.design/W8N2oe2walGq3Zm5/scene.splinecode";
 
 const phrases = [
-  "Full Stack Developer",
-  "PHP & Laravel",
-  "React & TypeScript",
-  "Creative Writer",
-  "Open to Collaborate",
+  "Configuring...",
+  "npm run dev",
+  "git coomit",
+  "git add .",
+  "git push",
 ];
 
 const SplineBackground = () => {
@@ -122,12 +122,6 @@ const SplineBackground = () => {
               textAlign: "center",
             }}
           >
-            <p
-              className="font-mono text-[10px] uppercase tracking-[0.2em] mb-1.5"
-              style={{ color: "rgba(201,81,122,0.6)" }}
-            >
-              ✦ currently
-            </p>
             <div
               style={{
                 height: "20px",
